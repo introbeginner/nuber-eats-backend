@@ -6,6 +6,8 @@ import { RestaurantsModule } from './restaurants/restaurants.module';
 
 import * as Joi from"joi";
 import { Restaurant } from './restaurants/entities/restaurant.entity';
+import { UesrsModule } from './uesrs/uesrs.module';
+import { User } from './uesrs/entities/user.entity';
 
 @Module({
   imports: [GraphQLModule.forRoot({
@@ -31,7 +33,8 @@ import { Restaurant } from './restaurants/entities/restaurant.entity';
   'database':process.env.DB_NAME,
   "synchronize": process.env.NODE_ENV !== 'prod',
   "logging": true,
-  entities: [Restaurant]}),
+  entities: [User, Restaurant]}),
+  UesrsModule,
   RestaurantsModule,
   ],
   controllers: [],
