@@ -8,6 +8,7 @@ import * as Joi from"joi";
 import { Restaurant } from './restaurants/entities/restaurant.entity';
 import { UesrsModule } from './uesrs/uesrs.module';
 import { User } from './uesrs/entities/user.entity';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [GraphQLModule.forRoot({
@@ -36,6 +37,7 @@ import { User } from './uesrs/entities/user.entity';
   entities: [User, Restaurant]}),
   UesrsModule,
   RestaurantsModule,
+  CommonModule,
   ],
   controllers: [],
   providers: [],

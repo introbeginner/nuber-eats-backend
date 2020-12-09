@@ -1,8 +1,9 @@
 import { Field, InputType, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { BeforeInsert, Column, Entity } from "typeorm";
-import { CoreEntity } from "./core.entity";
+import { CoreEntity } from "../../common/entities/core.entity";
 import * as bcrypt from 'bcrypt';
 import { InternalServerErrorException } from "@nestjs/common";
+import { IsEmail, IsEnum } from "class-validator";
 
 //type UserRole = 'client'|'owner'|'delivery';
 
@@ -21,6 +22,7 @@ registerEnumType(UserRole, {name: 'UserRole'});
 export class User extends CoreEntity{
     @Column()
     @Field(type=> String)
+    @IsEmail()
     email: string;
 
     @Column()
@@ -29,6 +31,7 @@ export class User extends CoreEntity{
 
     @Column({type:"enum", enum: UserRole})  //db
     @Field(type=> UserRole)                 //graphQL
+    @IsEnum(UserRole)
     role:UserRole;
 
     @BeforeInsert() //when create or save ? save. create just create, not save. insert is save
