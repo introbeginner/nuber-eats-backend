@@ -8,7 +8,7 @@ import { UsersService } from "./user.service";
 @Resolver(of => User)
 export class UsersResolver {
     constructor(
-        private readonly usersService: UsersService
+        private readonly usersService: UsersService,
     ){}
 
     @Query(returns => Boolean)

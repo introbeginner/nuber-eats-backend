@@ -9,6 +9,7 @@ import { Restaurant } from './restaurants/entities/restaurant.entity';
 import { UesrsModule } from './uesrs/uesrs.module';
 import { User } from './uesrs/entities/user.entity';
 import { CommonModule } from './common/common.module';
+import { JwtModule } from './jwt/jwt.module';
 
 @Module({
   imports: [GraphQLModule.forRoot({
@@ -24,7 +25,7 @@ import { CommonModule } from './common/common.module';
       DB_PASSWORD:Joi.string().required(),
       DB_HOST:Joi.string().required(),
       DB_NAME:Joi.string().required(),
-      TOKEN_SECRET: Joi.string().required(),
+      SECRET_KEY: Joi.string().required(),
     })
   }),
   TypeOrmModule.forRoot({"type": "postgres",
@@ -36,9 +37,11 @@ import { CommonModule } from './common/common.module';
   "synchronize": process.env.NODE_ENV !== 'prod',
   "logging": true,
   entities: [User, Restaurant]}),
+  
   UesrsModule,
   RestaurantsModule,
   CommonModule,
+  JwtModule.forRoot(),
   ],
   controllers: [],
   providers: [],
