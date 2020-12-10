@@ -24,6 +24,7 @@ import { CommonModule } from './common/common.module';
       DB_PASSWORD:Joi.string().required(),
       DB_HOST:Joi.string().required(),
       DB_NAME:Joi.string().required(),
+      TOKEN_SECRET: Joi.string().required(),
     })
   }),
   TypeOrmModule.forRoot({"type": "postgres",
