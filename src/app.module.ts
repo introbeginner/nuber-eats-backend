@@ -25,7 +25,7 @@ import { JwtModule } from './jwt/jwt.module';
       DB_PASSWORD:Joi.string().required(),
       DB_HOST:Joi.string().required(),
       DB_NAME:Joi.string().required(),
-      SECRET_KEY: Joi.string().required(),
+      PRIVATE_KEY: Joi.string().required(),
     })
   }),
   TypeOrmModule.forRoot({"type": "postgres",
@@ -41,7 +41,7 @@ import { JwtModule } from './jwt/jwt.module';
   UesrsModule,
   RestaurantsModule,
   CommonModule,
-  JwtModule.forRoot(),
+  JwtModule.forRoot({privateKey:process.env.PRIVATE_KEY}),
   ],
   controllers: [],
   providers: [],
