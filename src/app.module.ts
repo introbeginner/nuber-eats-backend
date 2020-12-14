@@ -12,6 +12,7 @@ import { CommonModule } from './common/common.module';
 import { JwtModule } from './jwt/jwt.module';
 import { JwtMiddleware } from './jwt/jwt.middleware';
 import { AuthModule } from './auth/auth.module';
+import { Verification } from './uesrs/entities/verification.entity';
 
 @Module({
   imports: [GraphQLModule.forRoot({
@@ -39,7 +40,7 @@ import { AuthModule } from './auth/auth.module';
   'database':process.env.DB_NAME,
   "synchronize": process.env.NODE_ENV !== 'prod',
   "logging": true,
-  entities: [User, Restaurant]}),
+  entities: [User, Verification, Restaurant]}),
   JwtModule.forRoot({privateKey:process.env.PRIVATE_KEY}),
   UesrsModule,
   RestaurantsModule,

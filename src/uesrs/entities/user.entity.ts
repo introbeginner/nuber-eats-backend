@@ -37,6 +37,10 @@ export class User extends CoreEntity{
     @IsOptional()
     role:UserRole;
 
+    @Column({default:false})
+    @Field(type=>Boolean)
+    verified:boolean;
+
     @BeforeInsert() //when create or save ? save. create just create, not save. insert is save
     @BeforeUpdate()
     async hashPassword(): Promise<void> {
