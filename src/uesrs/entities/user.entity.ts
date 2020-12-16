@@ -26,7 +26,7 @@ export class User extends CoreEntity{
     @IsOptional()
     email: string;
 
-    @Column()
+    @Column({select:false})
     @Field(type=> String)
     @IsOptional()
     password: string;
@@ -44,12 +44,15 @@ export class User extends CoreEntity{
     @BeforeInsert() //when create or save ? save. create just create, not save. insert is save
     @BeforeUpdate()
     async hashPassword(): Promise<void> {
-        try{
-            this.password = await bcrypt.hash(this.password, 10);
-        } catch(e){
-            console.log(e);
-            throw new InternalServerErrorException();
+        if(this.password){
+            try{
+                this.password = await bcrypt.hash(this.password, 10);
+            } catch(e){
+                console.log(e);
+                throw new InternalServerErrorException();
+            }
         }
+        
         
     }
 
