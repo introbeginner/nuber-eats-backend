@@ -35,7 +35,7 @@ export class UsersService {
                     user,
                 }),
             );
-            this.mailServive.sendVerificationEamil(user.email, verification.code);
+            this.mailServive.sendVerificationEmail(user.email, verification.code);
             return { ok: true };
 
         } catch (error) {
@@ -70,7 +70,7 @@ export class UsersService {
         } catch (error) {
             return {
                 ok: false,
-                error
+                error:'Could not log in'
             }
         }
 
@@ -78,13 +78,12 @@ export class UsersService {
 
     async findById(id: number): Promise<UserProfileOutput> {
         try {
-            const user = await this.users.findOne({ id });
-            if (user) {
-                return {
-                    ok: true,
-                    user,
-                };
-            }
+            const user = await this.users.findOneOrFail({ id }); 
+            return {
+                ok: true,
+                user,
+            };
+            
         } catch (error) {
             return {
                 error: 'User Not Found',
@@ -100,8 +99,8 @@ export class UsersService {
                 user.email = email;
                 user.verified = false;
                 await this.verifications.save(this.verifications.create({ user }));
-                //const verification = await this.verifications.save(this.verifications.create({ user }));
-                //this.mailServive.sendVerificationEamil(user.email, verification.code);
+                const verification = await this.verifications.save(this.verifications.create({ user }));
+                this.mailServive.sendVerificationEmail(user.email, verification.code);
             }
             if (password) {
                 user.password = password;
@@ -124,11 +123,12 @@ export class UsersService {
             if (verification) {
                 verification.user.verified = true;
                 this.users.save(verification.user);
+                await this.verifications.delete(verification.id);
                 return { ok: true };
             }
             return { ok: false, error: 'Verification not found.' };
         } catch (error) {
-            return { ok: false, error };
+            return { ok: false, error:'Could not verify email.' };
         }
     }
 
