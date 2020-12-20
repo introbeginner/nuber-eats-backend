@@ -92,7 +92,13 @@
       "node_modules",
       ".entity.ts",
       ".constants.ts",
-      ".dto.ts"
+      ".dto.ts",
+      ".module.ts",
+      ".resolver.ts",
+      ".middleware.ts",
+      ".guard.ts",
+      ".decorator.ts"
+
     ]
   }
 }
