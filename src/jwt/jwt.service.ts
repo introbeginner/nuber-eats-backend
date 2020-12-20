@@ -13,5 +13,6 @@ export class JwtService {
 
     verify(token:string){
         return jwt.verify(token, this.options.privateKey);
+        
     }
 }

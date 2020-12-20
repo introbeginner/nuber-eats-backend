@@ -10,7 +10,7 @@ export class MailService {
         //this.sendEmail('testing', 'test');
     }
 
-    private async sendEmail(subject: string, template: string, emailvars: EmailVar[]) {
+    async sendEmail(subject: string, template: string, emailvars: EmailVar[]) {
         const form = new FormData();
         form.append('from', `Nico from Nuber Eats <mailgun@${this.options.domain}>`);
         form.append('to', `intronovice@gmail.com`);
