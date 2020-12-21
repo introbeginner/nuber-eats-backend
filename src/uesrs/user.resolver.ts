@@ -35,7 +35,7 @@ export class UsersResolver {
 
     @Query(returns => User)
     @UseGuards(AuthGuard)
-    me(@AuthUser() authUser){
+    me(@AuthUser() authUser:User){
         return authUser;
     }
     

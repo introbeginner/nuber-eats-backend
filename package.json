@@ -94,7 +94,6 @@
       ".constants.ts",
       ".dto.ts",
       ".module.ts",
-      ".resolver.ts",
       ".middleware.ts",
       ".guard.ts",
       ".decorator.ts"
