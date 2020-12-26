@@ -15,6 +15,7 @@ import { AuthModule } from './auth/auth.module';
 import { Verification } from './uesrs/entities/verification.entity';
 import { MailModule } from './mail/mail.module';
 import { join } from 'path';
+import { Category } from './restaurants/entities/category.entity';
 
 @Module({
   imports: [GraphQLModule.forRoot({
@@ -45,7 +46,7 @@ import { join } from 'path';
   'database':process.env.DB_NAME,
   "synchronize": process.env.NODE_ENV !== 'prod',
   "logging": process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== 'test',
-  entities: [User, Verification, Restaurant]}),
+  entities: [User, Verification, Restaurant, Category]}),
   JwtModule.forRoot({privateKey:process.env.PRIVATE_KEY}),
   UesrsModule,
   RestaurantsModule,
@@ -54,9 +55,10 @@ import { join } from 'path';
     fromEmail:process.env.MAILGUN_FROM_EMAIL,
     domain:process.env.MAILGUN_DOMAIN_NAME,
   }),
-  
+  AuthModule,
   ],
   controllers: [],
+ 
   providers: [],
 })
 export class AppModule implements NestModule{

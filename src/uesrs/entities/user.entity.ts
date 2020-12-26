@@ -1,45 +1,49 @@
 import { Field, InputType, ObjectType, registerEnumType } from "@nestjs/graphql";
-import { BeforeInsert, BeforeUpdate, Column, Entity } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany } from "typeorm";
 import { CoreEntity } from "../../common/entities/core.entity";
 import * as bcrypt from 'bcrypt';
 import { InternalServerErrorException } from "@nestjs/common";
-import { IsEmail, IsEnum, IsOptional } from "class-validator";
+import { IsBoolean, IsEmail, IsEnum, IsOptional, IsString } from "class-validator";
+import { Restaurant } from "src/restaurants/entities/restaurant.entity";
 
 //type UserRole = 'client'|'owner'|'delivery';
 
-enum UserRole {
-    Client,
-    Owner,
-    Delivery
+export enum UserRole {
+    Client = "Client",
+    Owner = 'Owner',
+    Delivery = 'Delivery',
 }
 
 registerEnumType(UserRole, {name: 'UserRole'});
 
 
-@InputType({isAbstract:true})
+@InputType("UserInputType",{isAbstract:true})
 @ObjectType()
 @Entity()
 export class User extends CoreEntity{
     @Column({unique:true})
     @Field(type=> String)
     @IsEmail()
-    @IsOptional()
     email: string;
 
     @Column({select:false})
     @Field(type=> String)
-    @IsOptional()
+    @IsString()
     password: string;
 
     @Column({type:"enum", enum: UserRole})  //db
     @Field(type=> UserRole)                 //graphQL
     @IsEnum(UserRole)
-    @IsOptional()
     role:UserRole;
 
     @Column({default:false})
     @Field(type=>Boolean)
+    @IsBoolean()
     verified:boolean;
+
+    @Field(type => [Restaurant])
+    @OneToMany(type => Restaurant, restaurant => restaurant.owner)
+    restaurants: Restaurant[];
 
     @BeforeInsert() //when create or save ? save. create just create, not save. insert is save
     @BeforeUpdate()
