@@ -121,7 +121,7 @@ export class RestaurantService {
                 }
 
             }
-            console.log('delete', restaurant)
+            //console.log('delete', restaurant)
             //await this.restaurants.delete(restaurnatId);
             return {
                 ok: true,

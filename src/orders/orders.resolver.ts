@@ -1,4 +1,5 @@
-import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
+import { Args, Mutation, Query, Resolver, Subscription } from "@nestjs/graphql";
+import { PubSub } from "graphql-subscriptions";
 import { AuthUser } from "src/auth/auth-user.decorator";
 import { Role } from "src/auth/role.decorator";
 import { User } from "src/uesrs/entities/user.entity";
@@ -9,7 +10,7 @@ import { GetOrdersInput, GetOrdersOutput } from "./dtos/get-orders.dto";
 import { Order } from "./entities/order.entity";
 import { OrdersService } from "./orders.service";
 
-
+const pubsub = new PubSub();
 
 
 @Resolver(of => Order)
@@ -51,5 +52,18 @@ export class OrderResolver {
         return this.ordersService.editOrder(user, editOrderInput);
     }
 
+    @Mutation(returns => Boolean)
+    potatoReady(){
+        pubsub.publish('hotPotatos', {
+            orderSubscription: "Your potato is ready.. Love You"
+        })
+        return true;
+    }
 
+    @Subscription(returns => String)
+    @Role(['Any'])
+    orderSubscription(@AuthUser() user:User) {
+        console.log(user);
+        return pubsub.asyncIterator('hotPotatos');
+    }
 }

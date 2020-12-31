@@ -11,7 +11,6 @@ import { GetOrdersInput, GetOrdersOutput } from "./dtos/get-orders.dto";
 import { OrderItem } from "./entities/order-item.entity";
 import { Order, OrderStatus } from "./entities/order.entity";
 
-
 @Injectable()
 export class OrdersService {
     constructor(
