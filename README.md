@@ -45,5 +45,8 @@ The Backend of Nuber Eats Clone
 	- Delete Dish
 
 	- Orders CRUD
-	- Orders Subscription (Owner, Customer, Delivery)
+	- Orders Subscription 
+		- Pending Orders (Owner)
+		- Order Status (Customer, Delivery, Owner)
+		- Pending Pickup Order (Delivery)
 	- Payments (CRON)
